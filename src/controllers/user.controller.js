@@ -14,15 +14,15 @@ const registerUser = asyncHandler( async (req, res) => {
     // remove password andrefresh token field from response
     //check for user creation
     //return res
-    console.log("--- DEBUGGING FORM DATA ---");
-    console.log("Body Data:", req.body);
-    console.log("Files Data:", req.files);
-    console.log("---------------------------");
 
     const { fullName, email, username, password } = req.body
-    console.log("email: ", email);
-    if ([fullName, email, username, password].some((field) => !field?.trim())) {
-    throw new ApiError(400, "All fields are required");
+    console.log("BODY:", req.body);
+    console.log("FILES:", req.files);
+    //console.log("email: ", email);
+    if (
+        [fullName, email, username, password].some((field) => field?.trim() === "")
+    ) {
+        throw new ApiError(400, "All fields are required")
     }
 
     const existedUser = await User.findOne({
